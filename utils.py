@@ -1,3 +1,5 @@
+from pathlib import Path
+
 CITIES = {
     "MOSCOW": "https://code.s3.yandex.net/async-module/moscow-response.json",
     "PARIS": "https://code.s3.yandex.net/async-module/paris-response.json",
@@ -14,22 +16,44 @@ CITIES = {
     "BUCHAREST": "https://code.s3.yandex.net/async-module/bucharest-response.json",
     "ROMA": "https://code.s3.yandex.net/async-module/roma-response.json",
     "CAIRO": "https://code.s3.yandex.net/async-module/cairo-response.json",
-
     "GIZA": "https://code.s3.yandex.net/async-module/giza-response.json",
     "MADRID": "https://code.s3.yandex.net/async-module/madrid-response.json",
     "TORONTO": "https://code.s3.yandex.net/async-module/toronto-response.json"
 }
 
+CITIES_NAMES = {
+    "MOSCOW": "Москва",
+    "PARIS": "Париж",
+    "LONDON": "Лодон",
+    "BERLIN": "Берлин",
+    "BEIJING": "Пекин",
+    "KAZAN": "Казань",
+    "SPETERSBURG": "Санкт-Петербург",
+    "VOLGOGRAD": "Волгоград",
+    "NOVOSIBIRSK": "Новосибирск",
+    "KALININGRAD": "Калининград",
+    "ABUDHABI": "Абу-Даби",
+    "WARSZAWA": "Варшава",
+    "BUCHAREST": "Бухарест",
+    "ROMA": "Рим",
+    "CAIRO": "Каир",
+    "GIZA": "Гиза",
+    "MADRID": "Мадрид",
+    "TORONTO": "Торонто"
+}
+
 MIN_MAJOR_PYTHON_VER = 3
 MIN_MINOR_PYTHON_VER = 9
+
+BASE_DIR = Path(__file__).parent
 
 
 def check_python_version():
     import sys
 
     if (
-        sys.version_info.major < MIN_MAJOR_PYTHON_VER
-        or sys.version_info.minor < MIN_MINOR_PYTHON_VER
+            sys.version_info.major < MIN_MAJOR_PYTHON_VER
+            or sys.version_info.minor < MIN_MINOR_PYTHON_VER
     ):
         raise Exception(
             "Please use python version >= {}.{}".format(
