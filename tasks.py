@@ -70,8 +70,8 @@ class DataAggregationTask:
         self.results_dir = results_dir
 
     @staticmethod
-    def process_file(file_path: Path) -> (dict[str, dict[str, float]],
-                                          list[list[str]]):
+    def process_file(file_path: Path) -> tuple[dict[str, dict[str, float]],
+                                               list[list[str]]]:
         with open(file_path, 'r') as file:
             data = json.load(file)
         filter_days = [x for x in data['days'] if
@@ -98,8 +98,8 @@ class DataAggregationTask:
         logger.info(f'По файлу {file_path} произведён подсчёт значений.')
         return sub_result, result
 
-    def collect_and_overwrite(self) -> (dict[str, dict[str, float]],
-                                        list[list[str]]):
+    def collect_and_overwrite(self) -> tuple[dict[str, dict[str, float]],
+                                             list[list[str]]]:
         directory = BASE_DIR / 'analyzed_data'
         result = [('Город', 'Ед.изм', '2022-05-26', '2022-05-27',
                    '2022-05-28', 'Среднее', 'Рейтинг')]

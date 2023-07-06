@@ -1,6 +1,7 @@
 import shutil
 from multiprocessing import Manager
 from multiprocessing.pool import Pool
+from threading import Thread
 
 from tasks import (DataFetchingTask, DataCalculationTask, DataAggregationTask,
                    DataAnalyzingTask, )
@@ -27,11 +28,15 @@ def forecast_weather():
                                                 data_queue)
     data_analyzing_task = DataAnalyzingTask(BASE_DIR / 'results')
 
+    processing_thread = Thread(target=data_calculation_task.process_queue)
+    processing_thread.start()
+
     with Pool() as fetch_pool:
         fetch_pool.map(data_fetching_task.get_data, CITIES.keys())
+
     data_queue.put(None)
 
-    data_calculation_task.process_queue()
+    processing_thread.join()
 
     start_aggregation()
 
