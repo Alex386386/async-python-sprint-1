@@ -6,23 +6,23 @@ from functools import reduce
 from operator import getitem
 from typing import Optional, List, Dict
 
-PATH_FROM_INPUT = "./../examples/response.json"
-PATH_TO_OUTPUT = "./../examples/output.json"
+PATH_FROM_INPUT = './../examples/response.json'
+PATH_TO_OUTPUT = './../examples/output.json'
 
-INPUT_FORECAST_PATH = "forecasts"
-INPUT_DATE_PATH = "date"
+INPUT_FORECAST_PATH = 'forecasts'
+INPUT_DATE_PATH = 'date'
 
-INPUT_HOURS_PATH = "hours"
-INPUT_HOUR_PATH = "hour"
-INPUT_TEMPERATURE_PATH = "temp"
-INPUT_CONDITION_PATH = "condition"
+INPUT_HOURS_PATH = 'hours'
+INPUT_HOUR_PATH = 'hour'
+INPUT_TEMPERATURE_PATH = 'temp'
+INPUT_CONDITION_PATH = 'condition'
 INPUT_DAY_HOURS_START = 9
 INPUT_DAY_HOURS_END = 19
 INPUT_DAY_SUITABLE_CONDITIONS = [
-    "clear",
-    "partly-cloudy",
-    "cloudy",
-    "overcast",
+    'clear',
+    'partly-cloudy',
+    'cloudy',
+    'overcast',
     # "drizzle",
     # "light-rain",
     # "rain",
@@ -40,8 +40,8 @@ INPUT_DAY_SUITABLE_CONDITIONS = [
     # "thunderstorm-with-hail"
 ]
 
-OUTPUT_RAW_DATA_KEY = "raw_data"
-OUTPUT_DAYS_KEY = "days"
+OUTPUT_RAW_DATA_KEY = 'raw_data'
+OUTPUT_DAYS_KEY = 'days'
 DEFAULT_OUTPUT_RESULT = {
     OUTPUT_DAYS_KEY: [],
     # OUTPUT_RAW_DATA_KEY: None,
@@ -50,7 +50,7 @@ DEFAULT_OUTPUT_RESULT = {
 
 def deep_getitem(obj, path: str):
     try:
-        return reduce(getitem, path.split(">"), obj)
+        return reduce(getitem, path.split('>'), obj)
     except (KeyError, TypeError):
         return None
 
@@ -62,7 +62,7 @@ def load_data(input_path: str = PATH_FROM_INPUT):
 
 
 def dump_data(data, output_path: str = PATH_TO_OUTPUT):
-    with open(output_path, mode="w") as file:
+    with open(output_path, mode='w') as file:
         formatted_data = json.dumps(data, indent=2)
         file.write(formatted_data)
 
@@ -70,20 +70,20 @@ def dump_data(data, output_path: str = PATH_TO_OUTPUT):
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "-i",
-        "--input",
+        '-i',
+        '--input',
         default=PATH_FROM_INPUT,
         type=str,
-        help="path to file with input data",
+        help='path to file with input data',
     )
     parser.add_argument(
-        "-o",
-        "--output",
+        '-o',
+        '--output',
         default=PATH_TO_OUTPUT,
         type=str,
-        help="path to file with result",
+        help='path to file with result',
     )
-    parser.add_argument("-v", "--verbose", action="store_true")
+    parser.add_argument('-v', '--verbose', action='store_true')
     return parser.parse_args()
 
 
@@ -130,14 +130,14 @@ class DayInfo:
 
     def to_json(self):
         return {
-            "date": self.date,
-            "hours_start": self.hour_start,
-            "hours_end": self.hour_end,
-            "hours_count": self.hours_count,
-            "temp_avg": round(self.temperature_avg, 3)
+            'date': self.date,
+            'hours_start': self.hour_start,
+            'hours_end': self.hour_end,
+            'hours_count': self.hours_count,
+            'temp_avg': round(self.temperature_avg, 3)
             if self.temperature_avg
             else self.temperature_avg,
-            "relevant_cond_hours": self.relevant_condition_hours,
+            'relevant_cond_hours': self.relevant_condition_hours,
         }
 
     def __post_init__(self):
@@ -177,7 +177,7 @@ class DayInfo:
 
 def analyze_json(data):
     if not data:
-        logging.warning("Input data is empty...")
+        logging.warning('Input data is empty...')
         return {}
 
     # analyzing days
@@ -202,7 +202,7 @@ def analyze_json(data):
     return result
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     args = parse_args()
     input_path = args.input
     output_path = args.output

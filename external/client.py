@@ -3,7 +3,7 @@ import logging
 from http import HTTPStatus
 from urllib.request import urlopen
 
-ERR_MESSAGE_TEMPLATE = "Unexpected error: {error}"
+ERR_MESSAGE_TEMPLATE = 'Unexpected error: {error}'
 
 
 logger = logging.getLogger()
@@ -18,11 +18,11 @@ class YandexWeatherAPI:
         """Base request method"""
         try:
             with urlopen(url) as response:
-                resp_body = response.read().decode("utf-8")
+                resp_body = response.read().decode('utf-8')
                 data = json.loads(resp_body)
             if response.status != HTTPStatus.OK:
                 raise Exception(
-                    "Error during execute request. {}: {}".format(
+                    'Error during execute request. {}: {}'.format(
                         resp_body.status, resp_body.reason
                     )
                 )
